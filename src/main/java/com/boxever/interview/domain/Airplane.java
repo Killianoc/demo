@@ -13,5 +13,6 @@ public class Airplane {
 
     private List<AirplaneRow> airplaneRows = new ArrayList<>();
     private List<TravelGroups> potentialTravelGroups = new ArrayList<>();
+    private List<TravelGroups> surplusRows = new ArrayList<>();
 
 }

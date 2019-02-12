@@ -41,4 +41,9 @@ public class TravelGroups {
         occupants.forEach(occupantConsumer::accept);
         return this;
     }
+
+    public TravelGroups addOccupantsAsExtras(List<String> occupants) {
+        occupants.forEach(extraOccupants::add);
+        return this;
+    }
 }

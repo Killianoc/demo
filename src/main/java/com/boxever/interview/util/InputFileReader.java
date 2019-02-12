@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
 public class InputFileReader {
@@ -18,6 +19,7 @@ public class InputFileReader {
 
     public static Airplane readInputFile(Path inputFilePath) throws IOException {
         AtomicBoolean isFirstLine = new AtomicBoolean(true);
+        AtomicInteger rowCount = new AtomicInteger(0);
         Airplane airplane = new Airplane();
 
         if (!inputFilePath.toFile().exists()) {
@@ -34,6 +36,7 @@ public class InputFileReader {
                 TravelGroups travelGroup =
                         new TravelGroups(airplane.getSeatsInRow()).addOccupantsToSeats(inputGroupLine);
                 airplane.getPotentialTravelGroups().add(travelGroup);
+                rowCount.incrementAndGet();
             }
         });
 

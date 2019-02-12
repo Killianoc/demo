@@ -7,6 +7,7 @@ import com.boxever.interview.util.InputFileReader;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,5 +36,44 @@ public class BasicAirplaneServiceTest {
                 11L, (long)airplaneRows.get(4).get(0).getOccupantId());
         Assert.assertEquals("Row three mapped correctly",
                 12L, (long)airplaneRows.get(4).get(1).getOccupantId());
+    }
+
+    @Test
+    public void testAirplaneServiceScenarioTwo() throws Exception {
+        Airplane airplane = InputFileReader.readInputFile(Paths.get("src/test/resources/InputFiles/BasicInputFile2.txt"));
+        airplaneService.assignAirplaneSeats(airplane);
+
+        List<List<SeatOccupant>> airplaneRows = airplane.getAirplaneRows().stream()
+                .flatMap(item -> Stream.of(item.getRegularSeatOccupants(), item.getWindowSeatOccupants()))
+                .filter(item -> !item.isEmpty())
+                .collect(Collectors.toList());
+
+        Assert.assertEquals("Row one mapped correctly",
+                3L, (long)airplaneRows.get(0).get(0).getOccupantId());
+        Assert.assertEquals("Row one mapped correctly",
+                4L, (long)airplaneRows.get(0).get(1).getOccupantId());
+        Assert.assertEquals("Row one mapped correctly",
+                5L, (long)airplaneRows.get(0).get(2).getOccupantId());
+        Assert.assertEquals("Row two mapped window seats correctly",
+                2L, (long)airplaneRows.get(2).get(0).getOccupantId());
+    }
+
+    @Test
+    public void testAirplaneFullyBookedWithPassengersMissingOut() throws Exception {
+        Path inputPath = Paths.get("src/test/resources/InputFiles/BasicInputFile_fullFlight.txt");
+        Airplane airplane = InputFileReader.readInputFile(inputPath);
+        airplaneService.assignAirplaneSeats(airplane);
+
+        airplane.getAirplaneRows().stream()
+                .flatMap(item -> Stream.of(item.getRegularSeatOccupants(), item.getWindowSeatOccupants()))
+                .filter(item -> !item.isEmpty())
+                .forEach(item -> {
+                    item.forEach(item2 -> {
+                        Assert.assertNotEquals(17L, (long) item2.getOccupantId());
+                        Assert.assertNotEquals(18L, (long) item2.getOccupantId());
+                        Assert.assertNotEquals(19L, (long) item2.getOccupantId());
+                        Assert.assertNotEquals(20L, (long) item2.getOccupantId());
+                    });
+                });
     }
 }

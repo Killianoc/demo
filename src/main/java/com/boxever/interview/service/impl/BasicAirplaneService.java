@@ -48,8 +48,10 @@ public class BasicAirplaneService implements AirplaneService {
         List<AirplaneRow> sortedSeats = airplane.getAirplaneRows().stream()
                 .filter(row -> !row.isRowMerged())
                 .collect(Collectors.toList());
-        airplane.setAirplaneRows(sortedSeats);
+        // Strip any other rows that the flight has no room for
+        airplane.setAirplaneRows(sortedSeats.subList(0, airplane.getNumberOfRowsInPlane()));
 
+        AirplaneSeatUtil.printAirplaneLayout(airplane);
         return airplane;
     }
 
