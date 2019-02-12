@@ -1,7 +1,6 @@
 package com.boxever.interview.domain;
 
 import lombok.Data;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

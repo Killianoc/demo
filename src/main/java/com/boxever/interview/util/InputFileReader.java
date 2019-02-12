@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class InputFileReader {
 
@@ -26,19 +27,21 @@ public class InputFileReader {
             throw new RuntimeException("File does not exist or incorrect path was entered");
         }
 
-        Files.lines(inputFilePath, Charset.forName("UTF-8")).forEach(line -> {
-            if (isFirstLine.get()) {
-                mapAirplaneSeatParameters(airplane,
-                        Arrays.asList(line.split(spacePattern.pattern())));
-                isFirstLine.set(false);
-            } else {
-                List<String> inputGroupLine = Arrays.asList(line.split(spacePattern.pattern()));
-                TravelGroups travelGroup =
-                        new TravelGroups(airplane.getSeatsInRow()).addOccupantsToSeats(inputGroupLine);
-                airplane.getPotentialTravelGroups().add(travelGroup);
-                rowCount.incrementAndGet();
-            }
-        });
+        try (Stream<String> inputLineStream = Files.lines(inputFilePath, Charset.forName("UTF-8"))) {
+            inputLineStream.forEach(line -> {
+                if (isFirstLine.get()) {
+                    mapAirplaneSeatParameters(airplane,
+                            Arrays.asList(line.split(spacePattern.pattern())));
+                    isFirstLine.set(false);
+                } else {
+                    List<String> inputGroupLine = Arrays.asList(line.split(spacePattern.pattern()));
+                    TravelGroups travelGroup =
+                            new TravelGroups(airplane.getSeatsInRow()).addOccupantsToSeats(inputGroupLine);
+                    airplane.getPotentialTravelGroups().add(travelGroup);
+                    rowCount.incrementAndGet();
+                }
+            });
+        }
 
         if (airplane.getPotentialTravelGroups().isEmpty()) {
             throw new RuntimeException("Invalid airplane parameters were passed in the input file.");
