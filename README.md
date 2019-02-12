@@ -1,0 +1,1 @@
+This is the beginning of the Code Challenge for seat allocation on an airplane.
