@@ -12,7 +12,6 @@ public class Airplane {
     private Integer numberOfRowsInPlane;
 
     private List<AirplaneRow> airplaneRows = new ArrayList<>();
-    private List<TravelGroups> potentialTravelGroups = new ArrayList<>();
-    private List<TravelGroups> surplusRows = new ArrayList<>();
+    private List<TravelGroup> potentialTravelGroups = new ArrayList<>();
 
 }

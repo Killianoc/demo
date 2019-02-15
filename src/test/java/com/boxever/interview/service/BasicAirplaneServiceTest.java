@@ -76,4 +76,27 @@ public class BasicAirplaneServiceTest {
                     });
                 });
     }
+
+    @Test
+    public void testShouldMapExtraOccupantsToPlane() throws Exception {
+        Path inputPath = Paths.get("src/test/resources/InputFiles/InputFile_extraPassengers.txt");
+        Airplane airplane = InputFileReader.readInputFile(inputPath);
+        airplaneService.assignAirplaneSeats(airplane);
+
+        List<SeatOccupant> windowSeatOccupants = airplane.getAirplaneRows().get(1).getWindowSeatOccupants();
+
+        Assert.assertEquals(5L, (long)windowSeatOccupants.get(0).getOccupantId());
+        Assert.assertEquals(6L, (long)windowSeatOccupants.get(1).getOccupantId());
+    }
+
+    @Test
+    public void testShouldMapExtraOccupantToNewRow() throws Exception {
+        Path inputPath = Paths.get("src/test/resources/InputFiles/InputFile_extraPassengers2.txt");
+        Airplane airplane = InputFileReader.readInputFile(inputPath);
+        airplaneService.assignAirplaneSeats(airplane);
+
+        List<SeatOccupant> windowSeatOccupants = airplane.getAirplaneRows().get(2).getRegularSeatOccupants();
+
+        Assert.assertEquals(9L, (long)windowSeatOccupants.get(0).getOccupantId());
+    }
 }

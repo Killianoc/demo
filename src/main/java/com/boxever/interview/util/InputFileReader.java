@@ -1,7 +1,7 @@
 package com.boxever.interview.util;
 
 import com.boxever.interview.domain.Airplane;
-import com.boxever.interview.domain.TravelGroups;
+import com.boxever.interview.domain.TravelGroup;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -35,8 +35,8 @@ public class InputFileReader {
                     isFirstLine.set(false);
                 } else {
                     List<String> inputGroupLine = Arrays.asList(line.split(spacePattern.pattern()));
-                    TravelGroups travelGroup =
-                            new TravelGroups(airplane.getSeatsInRow()).addOccupantsToSeats(inputGroupLine);
+                    TravelGroup travelGroup =
+                            new TravelGroup(airplane.getSeatsInRow()).addOccupantsToSeats(inputGroupLine);
                     airplane.getPotentialTravelGroups().add(travelGroup);
                     rowCount.incrementAndGet();
                 }
