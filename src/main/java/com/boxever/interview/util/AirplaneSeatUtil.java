@@ -40,7 +40,7 @@ public class AirplaneSeatUtil {
         boolean hasMergeOccurred = false;
 
         for (int i = 0; i < airplane.getAirplaneRows().size(); i++) {
-            if (airplane.getAirplaneRows().get(i).isRowMerged() && airplane.getAirplaneRows().get(i).isFull()) {
+            if (airplane.getAirplaneRows().get(i).isRowMerged()) {
                 continue;
             } else if (airplane.getAirplaneRows().get(i).equals(rowToMerge)) {
                 continue;

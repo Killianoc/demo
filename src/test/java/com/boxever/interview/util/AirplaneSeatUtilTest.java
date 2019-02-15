@@ -39,6 +39,7 @@ public class AirplaneSeatUtilTest {
     @Test
     public void testCountShouldReturnZeroAsFlightIsFull() throws Exception {
         Airplane airplane = InputFileReader.readInputFile(Paths.get("src/test/resources/InputFiles/BasicInputFile.txt"));
+        new BasicAirplaneService().assignAirplaneSeats(airplane);
         long numberOfSeats = AirplaneSeatUtil.getNumberOfFreeSeats(airplane);
 
         Assert.assertEquals(0, numberOfSeats);
