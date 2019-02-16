@@ -80,8 +80,6 @@ public class AirplaneRow {
             if (successfulMerge.get())
                 row.setRowMerged(true);
         });
-
-        System.out.println("test");
         return successfulMerge.get();
     }
 
