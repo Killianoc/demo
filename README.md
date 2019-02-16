@@ -28,3 +28,14 @@ Satisfaction factors:
 100% Satisfaction - Person is sitting with all of original group and got desired seat
 50% Satisfaction - Person is not sitting with original group, but got desired window seat
 25% Satisfaction - Person is not sitting with original group, nor did they get their desired seat. Lucky to get on plane.
+
+How to run:
+
+Assuming maven is installed -
+1. In the directory where "pom.xml" is, open a command prompt and type "mvn clean package"
+2. Move to the "target" directory, and then in the command "java -jar demo-1.0.0.jar C:/path/to/file"
+3. Watch the output in the terminal window.
+
+If maven is not installed, use the existing jar file in the directory "demo".
+2. Type "java -jar demo-1.0.0.jar C:/path/to/file" in the terminal window.
+3. Watch the output in the terminal window.
