@@ -22,3 +22,9 @@ I used a Spring command line runner, along with a maven archetype project as it 
 to a spring context, which can be quite useful for autowiring a service or other items, as is
 seen in this project. It also allowed me to use the @Slf4j annotation for logging, which is
 convenient for quick logging in the application.
+
+Satisfaction factors:
+
+100% Satisfaction - Person is sitting with all of original group and got desired seat
+50% Satisfaction - Person is not sitting with original group, but got desired window seat
+25% Satisfaction - Person is not sitting with original group, nor did they get their desired seat. Lucky to get on plane.
