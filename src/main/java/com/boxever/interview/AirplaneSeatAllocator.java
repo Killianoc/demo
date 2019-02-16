@@ -2,6 +2,7 @@ package com.boxever.interview;
 
 import com.boxever.interview.domain.Airplane;
 import com.boxever.interview.service.AirplaneService;
+import com.boxever.interview.service.SatisfactionService;
 import com.boxever.interview.util.InputFileReader;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ public class AirplaneSeatAllocator implements CommandLineRunner {
 
 	@Autowired
 	private AirplaneService basicAirplaneService;
+	@Autowired
+	private SatisfactionService customerSatisfactionService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AirplaneSeatAllocator.class, args);
@@ -30,6 +33,8 @@ public class AirplaneSeatAllocator implements CommandLineRunner {
 		log.info("Attempting to allocate airplane seats based on input file " + args[0]);
 		Airplane airplane = InputFileReader.readInputFile(Paths.get(args[0]));
 		basicAirplaneService.assignAirplaneSeats(airplane);
+		Double satisfactionPercent = customerSatisfactionService.calculateSatisfaction(airplane);
+		log.info("Total customer satisfaction is: " + satisfactionPercent);
 	}
 
 }

@@ -1,4 +1,9 @@
 package com.boxever.interview.service;
 
-public class SatisfactionService {
+import com.boxever.interview.domain.Airplane;
+
+public interface SatisfactionService {
+
+    Double calculateSatisfaction(Airplane airplane);
+
 }

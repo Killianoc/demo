@@ -8,6 +8,7 @@ import lombok.Data;
 public class SeatOccupant {
 
     private Integer occupantId;
+    private Integer satisfactionPercent;
     private boolean isWindowOccupant;
     private boolean isExtraOccupant;
 }

@@ -3,7 +3,6 @@ package com.boxever.interview.util;
 import com.boxever.interview.domain.Airplane;
 import com.boxever.interview.domain.AirplaneRow;
 import com.boxever.interview.domain.SeatOccupant;
-import com.boxever.interview.domain.TravelGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
@@ -53,6 +52,16 @@ public class AirplaneSeatUtil {
                     hasMergeOccurred = true;
                     break;
                 }
+            } else if (canMergeIntoAlternateRow(airplane.getAirplaneRows(), rowToMerge, neededCapacity,
+                    airplane.getSeatsInRow())) {
+                continue;
+            } else if ((airplane.getAirplaneRows().get(i).getSeatsOccupied() + (neededCapacity / 2))
+                    <= airplane.getSeatsInRow()) {
+                if (airplane.getAirplaneRows().get(i)
+                        .mergeOccupantsIntoRow(Arrays.asList(rowToMerge), airplane.getSeatsInRow())) {
+                    hasMergeOccurred = true;
+                    break;
+                }
             }
         }
         return hasMergeOccurred;
@@ -79,6 +88,21 @@ public class AirplaneSeatUtil {
             allOutputRows.append(rowString).append(",");
         });
         return allOutputRows.toString();
+    }
+
+    private static boolean canMergeIntoAlternateRow(List<AirplaneRow> rows, AirplaneRow row, Integer neededCapacity,
+                                                    Integer maxSeatsInRow) {
+        Optional<AirplaneRow> potentialRow = rows.stream()
+                .filter(airplaneRow -> {
+                    if (airplaneRow.equals(row)) {
+                        return false;
+                    }
+                    if ((airplaneRow.getSeatsOccupied() + neededCapacity) <= maxSeatsInRow) {
+                        return true;
+                    }
+                    return false;
+                }).findAny();
+        return potentialRow.isPresent();
     }
 
     private static String generateRowString(Deque<Integer> firstDeque, Deque<Integer> secondDeque) {

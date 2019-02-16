@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Data
 @AllArgsConstructor
@@ -41,7 +43,11 @@ public class AirplaneRow {
         rowToMerge.forEach(row -> {
             if (!row.getWindowSeatOccupants().isEmpty()) {
                 row.getWindowSeatOccupants().forEach(actionRow -> {
+                    if (getSeatsOccupied() >= rowSize) {
+                        return;
+                    }
                     if (windowSeatOccupants.size() < maxWindows) {
+                        actionRow.setWindowOccupant(true);
                         windowSeatOccupants.add(actionRow);
                         successfulMerge.set(true);
                     } else if (regularSeatOccupants.size() < maxRegularSeats) {
@@ -55,10 +61,14 @@ public class AirplaneRow {
 
             if (!row.getRegularSeatOccupants().isEmpty()) {
                 row.getRegularSeatOccupants().forEach(actionRow -> {
+                    if (getSeatsOccupied() >= rowSize) {
+                        return;
+                    }
                     if (regularSeatOccupants.size() < maxRegularSeats) {
                         regularSeatOccupants.add(actionRow);
                         successfulMerge.set(true);
                     } else if (windowSeatOccupants.size() < maxWindows) {
+                        actionRow.setWindowOccupant(true);
                         windowSeatOccupants.add(actionRow);
                         successfulMerge.set(true);
                     } else {
@@ -81,5 +91,18 @@ public class AirplaneRow {
 
     public Integer getSeatsOccupied() {
         return windowSeatOccupants.size() + regularSeatOccupants.size();
+    }
+
+    public List<SeatOccupant> getAllSeatOccupants() {
+        List<SeatOccupant> windowOccupants = getWindowSeatOccupants();
+        List<SeatOccupant> regularOccupants = getRegularSeatOccupants();
+
+        return Stream.of(windowOccupants, regularOccupants).flatMap(List::stream).collect(Collectors.toList());
+    }
+
+    public boolean doesRowContainIndividual(SeatOccupant individual) {
+        List<SeatOccupant> occupants = getAllSeatOccupants();
+        return occupants.stream().anyMatch(seatedMember -> seatedMember.getOccupantId()
+                .equals(individual.getOccupantId()));
     }
 }
