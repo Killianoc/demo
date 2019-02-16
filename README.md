@@ -37,5 +37,5 @@ Assuming maven is installed -
 3. Watch the output in the terminal window.
 
 If maven is not installed, use the existing jar file in the directory "demo".
-2. Type "java -jar demo-1.0.0.jar C:/path/to/file" in the terminal window.
-3. Watch the output in the terminal window.
+1. Type "java -jar demo-1.0.0.jar C:/path/to/file" in the terminal window.
+2. Watch the output in the terminal window.
