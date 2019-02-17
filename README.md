@@ -8,10 +8,9 @@ Requirements:
 I have assumed, based on the challenge PDF, that there are 2 windows per row. This is because
 in the example input file, there was a 100% satisfaction rating output, even though both
 individual "11" and individual "12" both requested window seats, 12 did not seemingly lose
-any satisfaction.
-
-It should be acceptable to change the amount of seats per row, but the program will always assume
-that there are two window seats.
+any satisfaction. I have also assumed that if a group of two people are travelling together
+and get to sit on the same row, they will be 100% satisfied, even if they are not sitting
+right beside each other. They are still on the same row.
 
 My approach involves parsing the file into various POJO's with which I can work with easily.
 Once I have done this, I iterate through each "Potential travel group", and attempt to merge
@@ -22,10 +21,10 @@ The program will not print in a desired order like is displayed in the problem s
 however it will attempt to keep all customers satisfied. So you could say the customer satisfaction
 is preferred to the original order of where the customer was in the input file.
 
-I used a Spring command line runner, along with a maven archetype project as it gives me access
-to a spring context, which can be quite useful for autowiring a service or other items, as is
-seen in this project. It also allowed me to use the @Slf4j annotation for logging, which is
-convenient for quick logging in the application.
+I used a Spring command line runner, along with a maven project as it gives me access
+to a spring context, which can be quite useful for autowiring a service and other things.
+It also allowed me to use the @Slf4j annotation for logging, which is convenient for quick
+logging in the application.
 
 Satisfaction factors:
 
@@ -43,3 +42,8 @@ Assuming maven is installed -
 If maven is not installed, use the existing jar file in the directory "demo".
 1. Type "java -jar demo-1.0.0.jar C:/path/to/file" in the terminal window.
 2. Watch the output in the terminal window.
+
+Possible improvements:
+* Some parallel performance improvements could be made to enhance speed.
+* Satisfaction based on who you are sitting beside could be implemented.
+* Some code refactoring to make it clearer

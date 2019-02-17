@@ -43,7 +43,7 @@ public class CustomerSatisfactionService implements SatisfactionService {
                     log.error("Passenger " + occupant.getOccupantId() + " has come from nowhere!");
                     return;
                 }
-                querySatisfaction(airplaneRow, originalGroup.get(), occupant);
+                setIndividualSatisfaction(airplaneRow, originalGroup.get(), occupant);
             });
 
             airplaneRow.getWindowSeatOccupants().forEach(occupant -> {
@@ -54,14 +54,14 @@ public class CustomerSatisfactionService implements SatisfactionService {
                     log.error("Passenger " + occupant.getOccupantId() + " has come from nowhere!");
                     return;
                 }
-                querySatisfaction(airplaneRow, originalGroup.get(), occupant);
+                setIndividualSatisfaction(airplaneRow, originalGroup.get(), occupant);
             });
         });
 
         return calculateSatisfactionRate(airplane);
     }
 
-    private void querySatisfaction(AirplaneRow row, TravelGroup travelGroup, SeatOccupant occupant) {
+    private void setIndividualSatisfaction(AirplaneRow row, TravelGroup travelGroup, SeatOccupant occupant) {
         AtomicBoolean isNotWithGroup = new AtomicBoolean(false);
         List<String> originalGroup = travelGroup.getAllGroupMembers();
 
