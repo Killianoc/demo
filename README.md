@@ -1,6 +1,10 @@
 This is a Code Challenge to assign seating on an airplane. Satisfaction is judged based on
 if travelling groups sit together, and whether people who requested a window seat get it.
 
+Requirements:
+    * Java runtime environment
+    * Maven (if building/packaging the project)
+
 I have assumed, based on the challenge PDF, that there are 2 windows per row. This is because
 in the example input file, there was a 100% satisfaction rating output, even though both
 individual "11" and individual "12" both requested window seats, 12 did not seemingly lose

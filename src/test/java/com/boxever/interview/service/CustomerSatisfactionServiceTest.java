@@ -34,6 +34,6 @@ public class CustomerSatisfactionServiceTest {
 
         Double satisfactionPercent = satisfactionService.calculateSatisfaction(airplane);
 
-        Assert.assertTrue(satisfactionPercent != null);
+        Assert.assertTrue(satisfactionPercent.equals(70.0));
     }
 }

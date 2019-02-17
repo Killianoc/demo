@@ -2,6 +2,7 @@ package com.boxever.interview.util;
 
 import com.boxever.interview.domain.Airplane;
 import com.boxever.interview.domain.TravelGroup;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -14,6 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+@Slf4j
 public class InputFileReader {
 
     private static final Pattern spacePattern = Pattern.compile("\\s+");
@@ -52,9 +54,20 @@ public class InputFileReader {
 
     private static void mapAirplaneSeatParameters(Airplane airplane, List<String> planeParameters) {
         if (planeParameters.size() != 2) {
-            throw new RuntimeException("Invalid plane seat and row parameters passed.");
+            throw new RuntimeException("Invalid plane seat and row parameters passed. There were not exactly two parameters.");
         }
-        airplane.setSeatsInRow(Integer.parseInt(planeParameters.get(0)));
-        airplane.setNumberOfRowsInPlane(Integer.parseInt(planeParameters.get(1)));
+        try {
+            Integer seatsInRow = Integer.parseInt(planeParameters.get(0));
+            Integer rowsInPlane = Integer.parseInt(planeParameters.get(1));
+
+            if (seatsInRow <= 0 || rowsInPlane <= 0) {
+                throw new RuntimeException("Plane seat and row parameters cannot be less than or equal to zero.");
+            }
+
+            airplane.setSeatsInRow(seatsInRow);
+            airplane.setNumberOfRowsInPlane(rowsInPlane);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Invalid parameters. First line must be numbers.");
+        }
     }
 }

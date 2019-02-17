@@ -35,6 +35,7 @@ public class AirplaneSeatAllocator implements CommandLineRunner {
 		basicAirplaneService.assignAirplaneSeats(airplane);
 		Double satisfactionPercent = customerSatisfactionService.calculateSatisfaction(airplane);
 		log.info("Total customer satisfaction is: " + satisfactionPercent);
+		System.exit(0);
 	}
 
 }

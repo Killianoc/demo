@@ -96,7 +96,10 @@ public class CustomerSatisfactionService implements SatisfactionService {
     }
 
     private Double calculateSatisfactionRate(Airplane airplane) {
-        Double maxSatisfaction = Double.valueOf(airplane.getNumberOfRowsInPlane() * airplane.getSeatsInRow()) * 100;
+        Integer numberOfCustomersBooked = airplane.getPotentialTravelGroups().stream()
+                .mapToInt(group -> group.getExtraOccupants().size() + group.getNormalSeatOccupants().size()
+                        + group.getWindowSeatOccupants().size()).sum();
+        Double maxSatisfaction = Double.valueOf(numberOfCustomersBooked) * 100;
         Double currentSatisfactionRate = airplane.getAirplaneRows().stream()
                 .mapToDouble(row -> row.getAllSeatOccupants().stream().mapToDouble(SeatOccupant::getSatisfactionPercent).sum())
                 .sum();
