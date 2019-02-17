@@ -2,6 +2,7 @@ package com.boxever.interview.util;
 
 import com.boxever.interview.domain.Airplane;
 import com.boxever.interview.domain.TravelGroup;
+import com.boxever.interview.exception.SeatAllocationException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class InputFileReader {
         Airplane airplane = new Airplane();
 
         if (!inputFilePath.toFile().exists()) {
-            throw new RuntimeException("File does not exist or incorrect path was entered");
+            throw new SeatAllocationException("File does not exist or incorrect path was entered");
         }
 
         try (Stream<String> inputLineStream = Files.lines(inputFilePath, Charset.forName("UTF-8"))) {
@@ -46,7 +47,7 @@ public class InputFileReader {
         }
 
         if (airplane.getPotentialTravelGroups().isEmpty()) {
-            throw new RuntimeException("Invalid airplane parameters were passed in the input file.");
+            throw new SeatAllocationException("Invalid airplane parameters were passed in the input file.");
         }
 
         return airplane;
@@ -54,20 +55,20 @@ public class InputFileReader {
 
     private static void mapAirplaneSeatParameters(Airplane airplane, List<String> planeParameters) {
         if (planeParameters.size() != 2) {
-            throw new RuntimeException("Invalid plane seat and row parameters passed. There were not exactly two parameters.");
+            throw new SeatAllocationException("Invalid plane seat and row parameters passed. There were not exactly two parameters.");
         }
         try {
             Integer seatsInRow = Integer.parseInt(planeParameters.get(0));
             Integer rowsInPlane = Integer.parseInt(planeParameters.get(1));
 
             if (seatsInRow <= 0 || rowsInPlane <= 0) {
-                throw new RuntimeException("Plane seat and row parameters cannot be less than or equal to zero.");
+                throw new SeatAllocationException("Plane seat and row parameters cannot be less than or equal to zero.");
             }
 
             airplane.setSeatsInRow(seatsInRow);
             airplane.setNumberOfRowsInPlane(rowsInPlane);
         } catch (NumberFormatException e) {
-            throw new RuntimeException("Invalid parameters. First line must be numbers.");
+            throw new SeatAllocationException("Invalid parameters. First line must be numbers.");
         }
     }
 }
